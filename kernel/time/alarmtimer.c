@@ -278,7 +278,7 @@ static int alarmtimer_suspend(struct device *dev)
 		if (!next)
 			continue;
 		delta = ktime_sub(next->expires, base->gettime());
-		if (!min || (delta < min)) {
+		if (!min || (delta < min)) {			
 			expires = next->expires;
 			min = delta;
 			type = i;
@@ -896,6 +896,7 @@ static int __init alarmtimer_init(void)
 		error = PTR_ERR(pdev);
 		goto out_drv;
 	}
+	
 	return 0;
 
 out_drv:

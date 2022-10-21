@@ -23,6 +23,10 @@
 #include <net/genetlink.h>
 #include <linux/suspend.h>
 
+#ifdef CONFIG_DRM
+#include <drm/drm_notifier_mi.h>
+#endif
+
 #define CREATE_TRACE_POINTS
 #include <trace/events/thermal.h>
 
@@ -1691,6 +1695,9 @@ static int __init thermal_init(void)
 	if (result)
 		pr_warn("Thermal: Can not register suspend notifier, return %d\n",
 			result);
+
+#ifdef CONFIG_DRM
+#endif
 
 	return 0;
 
