@@ -975,8 +975,15 @@ static struct kgsl_process_private *kgsl_process_private_new(
 	list_for_each_entry(private, &kgsl_driver.process_list, list) {
 		if (private->pid == cur_pid) {
 			if (!kgsl_process_private_get(private)) {
-				private = ERR_PTR(-EINVAL);
-			}else{
+				/*
+				* This will happen only if refcount is zero
+				* i.e. destroy is triggered but didn't complete
+				* yet. Return -EEXIST to indicate caller that
+				* destroy is pending to allow caller to take
+				* appropriate action.
+				*/
+				private = ERR_PTR(-EEXIST);
+			} else {
 				mutex_lock(&private->private_mutex);
 				private->fd_count++;
 				mutex_unlock(&private->private_mutex);
@@ -1332,7 +1339,7 @@ kgsl_sharedmem_find(struct kgsl_process_private *private, uint64_t gpuaddr)
 	if (!private)
 		return NULL;
 
-	if (!kgsl_mmu_gpuaddr_in_range(private->pagetable, gpuaddr))
+	if (!kgsl_mmu_gpuaddr_in_range(private->pagetable, gpuaddr, 0))
 		return NULL;
 
 	spin_lock(&private->mem_lock);

@@ -2132,6 +2132,8 @@ void update_task_ravg(struct task_struct *p, struct rq *rq, int event,
 	update_cpu_busy_time(p, rq, event, wallclock, irqtime);
 	update_task_pred_demand(rq, p, event);
 
+
+
 	if (exiting_task(p))
 		goto done;
 
@@ -3468,12 +3470,6 @@ void walt_irq_work(struct irq_work *irq_work)
 							&asym_cap_sibling_cpus))
 				flag |= SCHED_CPUFREQ_INTERCLUSTER_MIG;
 
-			if (!is_migration && !is_asym_migration) {
-				cpufreq_update_util(cpu_rq(cpu), flag |
-						SCHED_CPUFREQ_CONTINUE);
-				i++;
-				continue;
-			}
 
 			if (i == num_cpus)
 				cpufreq_update_util(cpu_rq(cpu), flag);

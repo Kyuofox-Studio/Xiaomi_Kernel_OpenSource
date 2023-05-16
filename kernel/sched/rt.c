@@ -1962,6 +1962,7 @@ static int find_lowest_rq(struct task_struct *task)
 	 * We prioritize the last CPU that the task executed on since
 	 * it is most likely cache-hot in that location.
 	 */
+
 	if (cpumask_test_cpu(cpu, lowest_mask))
 		return cpu;
 

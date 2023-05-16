@@ -434,8 +434,6 @@ static int tz_get_target_freq(struct devfreq *devfreq, unsigned long *freq)
 
 	*freq = devfreq->profile->freq_table[level];
 
-	priv->bin.total_time = 0;
-	priv->bin.busy_time = 0;
 
 	return 0;
 }

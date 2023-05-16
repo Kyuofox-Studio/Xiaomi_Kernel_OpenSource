@@ -2197,12 +2197,14 @@ void ktime_get_coarse_ts64(struct timespec64 *ts)
 }
 EXPORT_SYMBOL(ktime_get_coarse_ts64);
 
+
 /*
  * Must hold jiffies_lock
  */
 void do_timer(unsigned long ticks)
 {
 	jiffies_64 += ticks;
+
 	update_misysinfo_jiffies();
 	calc_global_load(ticks);
 }

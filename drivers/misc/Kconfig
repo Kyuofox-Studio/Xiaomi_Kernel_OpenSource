@@ -655,6 +655,12 @@ config MI_GAMEKEY
 	help
 	  xiaomi physical game key, can detect press on the key and key whether pop.
 
+config MMHARDWARE_OTHER_DETECTION
+	tristate "Register xiaomi mmhardware detection module"
+	default n
+	help
+	  This adds support for mmhardware detection
+
 source "drivers/misc/c2port/Kconfig"
 source "drivers/misc/eeprom/Kconfig"
 source "drivers/misc/cb710/Kconfig"
@@ -697,3 +703,9 @@ config GPIO_TESTING_MODE
 	default n
 	help
 	  Enable driver for a simple testing mode detection
+
+config BOOTUP_RECLAIM
+        bool "bootup reclaim"
+        default n
+        help
+          reclaim global memory when bootup
